@@ -3,7 +3,6 @@ package application;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import boardgame.Position;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
@@ -58,16 +57,31 @@ public class UI {
 			System.out.print((8 - linha) + " ");
 
 			for (int coluna = 0; coluna < piece.length; coluna++) {
-				printPiece(piece[linha][coluna]);
+				printPiece(piece[linha][coluna], false);
+			}
+			System.out.println();
+		}
+		System.out.println("  a b c d e f g h");
+	}
+	
+	public static void printBoard(ChessPiece[][] piece, boolean[][] possibleMoves) {
+		for (int linha = 0; linha < piece.length; linha++) {
+			System.out.print((8 - linha) + " ");
+
+			for (int coluna = 0; coluna < piece.length; coluna++) {
+				printPiece(piece[linha][coluna], possibleMoves[linha][coluna]);
 			}
 			System.out.println();
 		}
 		System.out.println("  a b c d e f g h");
 	}
 
-	private static void printPiece(ChessPiece piece) {
+	private static void printPiece(ChessPiece piece, boolean background) {
+		if (background) {
+			System.out.print(ANSI_BLUE_BACKGROUND);
+		}
 		if (piece == null) {
-			System.out.print("-");
+			System.out.print("-" + ANSI_RESET);
 		} else {
 			if (piece.getColor() == Color.WHITE) {
 				System.out.print(ANSI_WHITE + piece + ANSI_RESET);
